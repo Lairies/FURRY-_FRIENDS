@@ -1,0 +1,22 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Allow access to existing files and directories
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+
+    # Rewrite all other requests to index.html
+    RewriteRule ^ index.html [L]
+</IfModule>
+
+<IfModule authz_core_module>
+    <Directory "/path/to/your-project/public">
+        Require all granted
+    </Directory>
+</IfModule>
+
+<IfModule !authz_core_module>
+    <Directory "/path/to/your-project/public">
+        Allow from all
+    </Directory>
+</IfModule>
